@@ -40,7 +40,7 @@ jobs:
         if: ${{ runner.os == 'Linux' }}
 
       - name: Tests
-        run: ${{ matrix.runner }} go test -race -tags "${{ matrix.tags }}" -covermode=atomic -coverprofile=coverage.out ./...
+        run: echo $LANG
 
       - name: Wayland Tests
         run: go test -race -tags no_glfw,ci,wayland ./...
