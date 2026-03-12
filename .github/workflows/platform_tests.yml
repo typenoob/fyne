@@ -17,8 +17,6 @@ jobs:
             tags: ci,migrated_fynedo
           - os: macos-latest
             tags: no_glfw,ci,migrated_fynedo
-      env:
-        LANG: en_US.UTF-8
 
     steps:
       - uses: actions/checkout@v5
@@ -37,8 +35,12 @@ jobs:
           echo "CGO_LDFLAGS=-fuse-ld=lld" >> "$GITHUB_ENV"
         if: ${{ runner.os == 'Linux' }}
 
+      - name: Set environment variable LANG
+        run: echo "LANG=en_US.UTF-8" >> $GITHUB_ENV
+        if: ${{ runner.os == 'Linux' }}
+
       - name: Tests
-        run: ${{ matrix.runner }} go test -race -tags "${{ matrix.tags }}" -covermode=atomic -coverprofile=coverage.out ./...
+        run: echo $LANG
 
       - name: Wayland Tests
         run: go test -race -tags no_glfw,ci,wayland ./...
